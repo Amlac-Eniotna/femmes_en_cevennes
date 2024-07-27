@@ -1,7 +1,7 @@
 // pages/index.tsx
-import React, { useState, useEffect, useRef } from 'react';
-import { useSession, signIn, signOut } from 'next-auth/react';
-import Image from 'next/image';
+import React, { useState, useEffect, useRef } from "react";
+import { useSession, signIn, signOut } from "next-auth/react";
+import Image from "next/image";
 
 interface HomeContent {
   text: string;
@@ -10,9 +10,12 @@ interface HomeContent {
 
 const Home: React.FC = () => {
   const { data: session } = useSession();
-  const [content, setContent] = useState<HomeContent>({ text: '', imageUrl: '' });
+  const [content, setContent] = useState<HomeContent>({
+    text: "",
+    imageUrl: "",
+  });
   const [isEditing, setIsEditing] = useState(false);
-  const [newText, setNewText] = useState('');
+  const [newText, setNewText] = useState("");
   const [newImage, setNewImage] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -21,7 +24,7 @@ const Home: React.FC = () => {
   }, []);
 
   const fetchContent = async () => {
-    const response = await fetch('/api/home-content');
+    const response = await fetch("/api/home-content");
     if (response.ok) {
       const data = await response.json();
       setContent(data);
@@ -37,13 +40,13 @@ const Home: React.FC = () => {
 
   const handleSave = async () => {
     const formData = new FormData();
-    formData.append('text', newText);
+    formData.append("text", newText);
     if (newImage) {
-      formData.append('image', newImage);
+      formData.append("image", newImage);
     }
 
-    const response = await fetch('/api/home-content', {
-      method: 'POST',
+    const response = await fetch("/api/home-content", {
+      method: "POST",
       body: formData,
     });
 
@@ -52,20 +55,22 @@ const Home: React.FC = () => {
       setContent(updatedContent);
       setIsEditing(false);
       setNewImage(null);
-      if (fileInputRef.current) fileInputRef.current.value = '';
+      if (fileInputRef.current) fileInputRef.current.value = "";
     }
   };
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <div className="flex justify-between items-center mb-8">
-        <h1 className="text-4xl font-bold">Bienvenue sur notre site</h1>
+      <div className="mb-8 flex items-center justify-between">
+        <h1 className="text-4xl font-bold">Femmes en cévennes</h1>
         {session ? (
           <div>
-            <span className="mr-4">Bonjour, {session.user?.name || session.user?.email}</span>
+            <span className="mr-4">
+              Bonjour, {session.user?.name || session.user?.email}
+            </span>
             <button
               onClick={() => signOut()}
-              className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+              className="rounded bg-red-500 px-4 py-2 font-bold text-white hover:bg-red-700"
             >
               Se déconnecter
             </button>
@@ -73,21 +78,26 @@ const Home: React.FC = () => {
         ) : (
           <button
             onClick={() => signIn()}
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            className="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
           >
             Se connecter
           </button>
         )}
       </div>
-      
+
       {!isEditing ? (
         <div>
           <p className="mb-4">{content.text}</p>
-          <Image src={content.imageUrl} alt="Image d'accueil" width={500} height={300} />
+          <Image
+            src={content.imageUrl}
+            alt="Image d'accueil"
+            width={500}
+            height={300}
+          />
           {session && (
             <button
               onClick={() => setIsEditing(true)}
-              className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+              className="mt-4 rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
             >
               Modifier
             </button>
@@ -98,7 +108,7 @@ const Home: React.FC = () => {
           <textarea
             value={newText}
             onChange={(e) => setNewText(e.target.value)}
-            className="w-full p-2 mb-4 border rounded"
+            className="mb-4 w-full rounded border p-2"
             rows={4}
           />
           <input
@@ -110,7 +120,7 @@ const Home: React.FC = () => {
           />
           <button
             onClick={handleSave}
-            className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 mr-2"
+            className="mr-2 rounded bg-green-500 px-4 py-2 text-white hover:bg-green-600"
           >
             Sauvegarder
           </button>
@@ -118,9 +128,9 @@ const Home: React.FC = () => {
             onClick={() => {
               setIsEditing(false);
               setNewImage(null);
-              if (fileInputRef.current) fileInputRef.current.value = '';
+              if (fileInputRef.current) fileInputRef.current.value = "";
             }}
-            className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+            className="rounded bg-red-500 px-4 py-2 text-white hover:bg-red-600"
           >
             Annuler
           </button>

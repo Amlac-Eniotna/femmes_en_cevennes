@@ -1,8 +1,8 @@
 // pages/api/auth/[...nextauth].ts
-import NextAuth, { NextAuthOptions } from "next-auth"
-import CredentialsProvider from "next-auth/providers/credentials"
-import { verifyPassword } from "../../../lib/auth"
-import { getUserByEmail } from "../../../lib/db"
+import NextAuth, { NextAuthOptions } from "next-auth";
+import CredentialsProvider from "next-auth/providers/credentials";
+import { verifyPassword } from "../../../lib/auth";
+import { getUserByEmail } from "../../../lib/db";
 
 if (!process.env.NEXTAUTH_URL) {
   console.error("NEXTAUTH_URL is not set");
@@ -15,47 +15,51 @@ if (!process.env.NEXTAUTH_SECRET) {
 export const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
-      name: 'Credentials',
+      name: "Credentials",
       credentials: {
         email: { label: "Email", type: "text" },
-        password: {  label: "Password", type: "password" }
+        password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) {
-          return null
+          return null;
         }
-        const user = await getUserByEmail(credentials.email)
+        const user = await getUserByEmail(credentials.email);
         if (!user) {
-          return null
+          return null;
         }
-        const isValid = await verifyPassword(credentials.password, user.password)
+        const isValid = await verifyPassword(
+          credentials.password,
+          user.password,
+        );
         if (!isValid) {
-          return null
+          return null;
         }
-        return { id: user.id, email: user.email }
-      }
-    })
+        return { id: user.id, email: user.email };
+      },
+    }),
   ],
   pages: {
-    signIn: '/auth/signin'
+    signIn: "/auth/signin",
+    signOut: "/",
   },
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        token.id = user.id
+        token.id = user.id;
       }
-      return token
+      return token;
     },
     async session({ session, token }) {
       if (session.user) {
-        session.user.id = token.id as string
+        session.user.id = token.id as string;
       }
-      return session
-    }
+      return session;
+    },
   },
   session: {
     strategy: "jwt",
   },
-}
+};
 
-export default NextAuth(authOptions)
+export default NextAuth(authOptions);

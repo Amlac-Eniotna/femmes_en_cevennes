@@ -1,11 +1,11 @@
 // scripts/init-db.mjs
-import sqlite3 from 'sqlite3';
-import { open } from 'sqlite';
+import sqlite3 from "sqlite3";
+import { open } from "sqlite";
 
 async function initDb() {
   const db = await open({
-    filename: './mydb.sqlite',
-    driver: sqlite3.Database
+    filename: "./mydb.sqlite",
+    driver: sqlite3.Database,
   });
 
   await db.exec(`
@@ -27,7 +27,7 @@ async function initDb() {
     VALUES (1, 'Bienvenue sur notre site !', '/placeholder.jpg');
   `);
 
-  console.log('Base de données initialisée avec succès');
+  console.log("Base de données initialisée avec succès");
 
   await db.close();
 }
