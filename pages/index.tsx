@@ -60,9 +60,68 @@ const Home: React.FC = () => {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="mb-8 flex items-center justify-between">
-        <h1 className="text-4xl font-bold">Femmes en cévennes</h1>
+    <main className="container mx-auto flex min-h-dvh max-w-screen-lg flex-col justify-between px-4 py-8">
+      <section>
+        <div className="mb-8 flex items-center justify-between">
+          <h1 className="text-4xl font-extrabold text-teal-800">
+            Femmes en cévennes
+          </h1>
+        </div>
+        {!isEditing ? (
+          <div className="rounded-xl bg-green-50 p-8">
+            <div className="relative min-h-48 w-full">
+              <Image
+                src={content.imageUrl}
+                alt="Image d'accueil"
+                fill={true}
+                objectFit="contain"
+              />
+            </div>
+            <p className="mt-8 text-xl">{content.text}</p>
+            {session && (
+              <button
+                onClick={() => setIsEditing(true)}
+                className="mt-4 rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+              >
+                Modifier
+              </button>
+            )}
+          </div>
+        ) : (
+          <div>
+            <textarea
+              value={newText}
+              onChange={(e) => setNewText(e.target.value)}
+              className="mb-4 w-full rounded border p-2"
+              rows={4}
+            />
+            <input
+              type="file"
+              accept="image/jpeg, image/png"
+              onChange={handleImageChange}
+              ref={fileInputRef}
+              className="mb-4"
+            />
+            <button
+              onClick={handleSave}
+              className="mr-2 rounded bg-green-500 px-4 py-2 text-white hover:bg-green-600"
+            >
+              Sauvegarder
+            </button>
+            <button
+              onClick={() => {
+                setIsEditing(false);
+                setNewImage(null);
+                if (fileInputRef.current) fileInputRef.current.value = "";
+              }}
+              className="rounded bg-red-500 px-4 py-2 text-white hover:bg-red-600"
+            >
+              Annuler
+            </button>
+          </div>
+        )}
+      </section>
+      <footer className="flex items-center justify-between">
         {session ? (
           <div>
             <span className="mr-4">
@@ -70,7 +129,7 @@ const Home: React.FC = () => {
             </span>
             <button
               onClick={() => signOut()}
-              className="rounded bg-red-500 px-4 py-2 font-bold text-white hover:bg-red-700"
+              className="rounded bg-red-500 px-2 py-1 text-xs font-bold text-white hover:bg-red-700"
             >
               Se déconnecter
             </button>
@@ -78,65 +137,13 @@ const Home: React.FC = () => {
         ) : (
           <button
             onClick={() => signIn()}
-            className="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
+            className="rounded bg-blue-500 px-2 py-1 text-xs font-bold text-white hover:bg-blue-700"
           >
             Se connecter
           </button>
         )}
-      </div>
-
-      {!isEditing ? (
-        <div>
-          <p className="mb-4">{content.text}</p>
-          <Image
-            src={content.imageUrl}
-            alt="Image d'accueil"
-            width={500}
-            height={300}
-          />
-          {session && (
-            <button
-              onClick={() => setIsEditing(true)}
-              className="mt-4 rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
-            >
-              Modifier
-            </button>
-          )}
-        </div>
-      ) : (
-        <div>
-          <textarea
-            value={newText}
-            onChange={(e) => setNewText(e.target.value)}
-            className="mb-4 w-full rounded border p-2"
-            rows={4}
-          />
-          <input
-            type="file"
-            accept="image/jpeg, image/png"
-            onChange={handleImageChange}
-            ref={fileInputRef}
-            className="mb-4"
-          />
-          <button
-            onClick={handleSave}
-            className="mr-2 rounded bg-green-500 px-4 py-2 text-white hover:bg-green-600"
-          >
-            Sauvegarder
-          </button>
-          <button
-            onClick={() => {
-              setIsEditing(false);
-              setNewImage(null);
-              if (fileInputRef.current) fileInputRef.current.value = "";
-            }}
-            className="rounded bg-red-500 px-4 py-2 text-white hover:bg-red-600"
-          >
-            Annuler
-          </button>
-        </div>
-      )}
-    </div>
+      </footer>
+    </main>
   );
 };
 
