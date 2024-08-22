@@ -13,6 +13,15 @@ const config: Config = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
+      boxShadow: {
+        dark: "-4px 4px 0px 0px #000",
+      },
+      translate: {
+        boxShadowX: "-4px",
+        boxShadowY: "4px",
+        reverseBoxShadowX: "4px",
+        reverseBoxShadowY: "-4px",
+      },
     },
   },
   plugins: [],

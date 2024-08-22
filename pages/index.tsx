@@ -2,6 +2,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useSession, signIn, signOut } from "next-auth/react";
 import Image from "next/image";
+import { Notable } from "next/font/google";
+
+const notable = Notable({ weight: ["400"], subsets: ["latin"] });
 
 interface HomeContent {
   text: string;
@@ -63,12 +66,15 @@ const Home: React.FC = () => {
     <main className="container mx-auto flex min-h-dvh max-w-screen-lg flex-col justify-between px-4 py-8">
       <section>
         <div className="mb-8 flex items-center justify-between">
-          <h1 className="text-4xl font-extrabold text-teal-800">
+          <h1
+            className={`${notable.className} translate-x-boxShadowX translate-y-boxShadowY stroke-black text-5xl font-extrabold text-amber-400`}
+            style={{ WebkitTextStroke: "1px black" }}
+          >
             Femmes en cévennes
           </h1>
         </div>
         {!isEditing ? (
-          <div className="rounded-xl bg-green-50 p-8">
+          <div className="translate-x-boxShadowX translate-y-boxShadowY min-h-[50vh] border-2 border-solid border-black bg-white p-8">
             <div className="relative min-h-48 w-full">
               <Image
                 src={content.imageUrl}
@@ -81,7 +87,7 @@ const Home: React.FC = () => {
             {session && (
               <button
                 onClick={() => setIsEditing(true)}
-                className="mt-4 rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+                className="shadow-dark hover:translate-x-boxShadowX hover:translate-y-boxShadowY mt-4 border-2 border-solid border-black bg-yellow-400 px-4 py-2 font-bold text-black transition-all hover:bg-yellow-500 hover:shadow-none"
               >
                 Modifier
               </button>
@@ -92,7 +98,7 @@ const Home: React.FC = () => {
             <textarea
               value={newText}
               onChange={(e) => setNewText(e.target.value)}
-              className="mb-4 w-full rounded border p-2"
+              className="translate-x-boxShadowX translate-y-boxShadowY mb-4 min-h-[50vh] w-full border-2 border-solid border-black bg-white p-2"
               rows={4}
             />
             <input
@@ -100,11 +106,11 @@ const Home: React.FC = () => {
               accept="image/jpeg, image/png"
               onChange={handleImageChange}
               ref={fileInputRef}
-              className="mb-4"
+              className="shadow-dark hover:translate-x-boxShadowX hover:translate-y-boxShadowY mb-4 block w-full border-2 border-solid border-black bg-yellow-400 px-4 py-2 font-bold text-black transition-all hover:bg-yellow-500 hover:shadow-none"
             />
             <button
               onClick={handleSave}
-              className="mr-2 rounded bg-green-500 px-4 py-2 text-white hover:bg-green-600"
+              className="shadow-dark hover:translate-x-boxShadowX hover:translate-y-boxShadowY border-2 border-solid border-black bg-green-400 px-4 py-2 font-bold text-black transition-all hover:bg-green-500 hover:shadow-none"
             >
               Sauvegarder
             </button>
@@ -114,22 +120,22 @@ const Home: React.FC = () => {
                 setNewImage(null);
                 if (fileInputRef.current) fileInputRef.current.value = "";
               }}
-              className="rounded bg-red-500 px-4 py-2 text-white hover:bg-red-600"
+              className="shadow-dark hover:translate-x-boxShadowX hover:translate-y-boxShadowY ml-4 border-2 border-solid border-black bg-red-400 px-4 py-2 font-bold text-black transition-all hover:bg-red-500 hover:shadow-none"
             >
               Annuler
             </button>
           </div>
         )}
       </section>
-      <footer className="flex items-center justify-between">
+      <footer className="mt-4 flex items-center justify-between">
         {session ? (
           <div>
-            <span className="mr-4">
+            <span className="mr-4 text-white">
               Bonjour, {session.user?.name || session.user?.email}
             </span>
             <button
               onClick={() => signOut()}
-              className="rounded bg-red-500 px-2 py-1 text-xs font-bold text-white hover:bg-red-700"
+              className="shadow-dark hover:translate-x-boxShadowX hover:translate-y-boxShadowY border-2 border-solid border-black bg-red-400 px-4 py-2 font-bold text-black transition-all hover:bg-red-500 hover:shadow-none"
             >
               Se déconnecter
             </button>
@@ -137,7 +143,8 @@ const Home: React.FC = () => {
         ) : (
           <button
             onClick={() => signIn()}
-            className="rounded bg-blue-500 px-2 py-1 text-xs font-bold text-white hover:bg-blue-700"
+            className="shadow-dark hover:translate-x-boxShadowX hover:translate-y-boxShadowY border-2 border-solid border-black bg-yellow-400 px-4 py-2 font-bold text-black transition-all hover:bg-yellow-500 hover:shadow-none"
+            style={{}}
           >
             Se connecter
           </button>

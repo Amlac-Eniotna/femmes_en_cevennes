@@ -43,7 +43,7 @@ const SignupForm: React.FC = () => {
       <div>
         <label
           htmlFor="email"
-          className="mb-2 block text-sm font-medium text-gray-900"
+          className="mb-2 block text-sm font-bold text-white"
         >
           Email
         </label>
@@ -52,14 +52,14 @@ const SignupForm: React.FC = () => {
           id="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
+          className="translate-x-boxShadowX translate-y-boxShadowY block w-full border-2 border-black bg-white p-2.5 text-sm text-black focus:border-black focus:ring-black"
           required
         />
       </div>
       <div>
         <label
           htmlFor="password"
-          className="mb-2 block text-sm font-medium text-gray-900"
+          className="mb-2 block text-sm font-bold text-white"
         >
           Mot de passe
         </label>
@@ -68,14 +68,14 @@ const SignupForm: React.FC = () => {
           id="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
+          className="translate-x-boxShadowX translate-y-boxShadowY block w-full border-2 border-black bg-white p-2.5 text-sm text-black focus:border-black focus:ring-black"
           required
         />
       </div>
       <div>
         <label
           htmlFor="confirmPassword"
-          className="mb-2 block text-sm font-medium text-gray-900"
+          className="mb-2 block text-sm font-bold text-white"
         >
           Confirmer le mot de passe
         </label>
@@ -84,16 +84,16 @@ const SignupForm: React.FC = () => {
           id="confirmPassword"
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
-          className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
+          className="translate-x-boxShadowX translate-y-boxShadowY block w-full border-2 border-black bg-white p-2.5 text-sm text-black focus:border-black focus:ring-black"
           required
         />
       </div>
       {error && <p className="text-sm text-red-500">{error}</p>}
       <button
         type="submit"
-        className="w-full rounded-lg bg-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300"
+        className="shadow-dark hover:translate-x-boxShadowX hover:translate-y-boxShadowY mt-8 w-full border-2 border-solid border-black bg-yellow-400 px-4 py-2 font-bold text-black transition-all hover:bg-yellow-500 hover:shadow-none"
       >
-        S'inscrire
+        {"S'inscrire"}
       </button>
     </form>
   );
