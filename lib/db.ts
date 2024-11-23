@@ -6,7 +6,7 @@ let db: any = null;
 async function getDb() {
   if (!db) {
     db = await open({
-      filename: "./mydb.sqlite",
+      filename: path.join(process.cwd(), 'data', 'mydb.sqlite'),
       driver: sqlite3.Database,
     });
   }

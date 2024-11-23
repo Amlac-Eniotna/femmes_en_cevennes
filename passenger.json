@@ -1,0 +1,6 @@
+{
+  "node_path": "/home/sora6757/.nvm/versions/node/v20.x.x/bin/node",
+  "startup_file": "server.js",
+  "environment": "production",
+  "port": 0
+}

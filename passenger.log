@@ -1,0 +1,12 @@
+App 2336977 output: /opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:80
+App 2336977 output: 	return originalRequire.apply(this, arguments);
+App 2336977 output:                         ^
+App 2336977 output: Error [ERR_REQUIRE_ESM]: require() of ES Module /home/sora6757/femmes-en-cevennes/server.js from /opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js not supported.
+App 2336977 output: Instead change the require of server.js in /opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js to a dynamic import() which is available in all CommonJS modules.
+App 2336977 output:     at Module.require (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:80:25)
+App 2336977 output:     at loadApplication (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:243:2)
+App 2336977 output:     at setupEnvironment (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:214:2)
+App 2336977 output:     at Object.<anonymous> (/opt/cpanel/ea-ruby27/root/usr/share/passenger/helper-scripts/node-loader.js:133:1) {
+App 2336977 output:   code: 'ERR_REQUIRE_ESM'
+App 2336977 output: }
+App 2336977 output: Node.js v20.17.0
