@@ -18,6 +18,13 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "scripts/init-db.mjs", "types/**/*.ts"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "scripts/init-db.mjs",
+    "types/**/*.ts",
+    "server.js"
+  ],
   "exclude": ["node_modules"]
 }

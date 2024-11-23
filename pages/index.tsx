@@ -74,7 +74,7 @@ const Home: React.FC = () => {
           </h1>
         </div>
         {!isEditing ? (
-          <div className="translate-x-boxShadowX translate-y-boxShadowY min-h-[50vh] border-2 border-solid border-black bg-white p-8">
+          <div className="min-h-[50vh] translate-x-boxShadowX translate-y-boxShadowY border-2 border-solid border-black bg-white p-8">
             <div className="relative min-h-48 w-full">
               <Image
                 src={content.imageUrl}
@@ -87,7 +87,7 @@ const Home: React.FC = () => {
             {session && (
               <button
                 onClick={() => setIsEditing(true)}
-                className="shadow-dark hover:translate-x-boxShadowX hover:translate-y-boxShadowY mt-4 border-2 border-solid border-black bg-yellow-400 px-4 py-2 font-bold text-black transition-all hover:bg-yellow-500 hover:shadow-none"
+                className="mt-4 border-2 border-solid border-black bg-yellow-400 px-4 py-2 font-bold text-black shadow-dark transition-all hover:translate-x-boxShadowX hover:translate-y-boxShadowY hover:bg-yellow-500 hover:shadow-none"
               >
                 Modifier
               </button>
@@ -98,7 +98,7 @@ const Home: React.FC = () => {
             <textarea
               value={newText}
               onChange={(e) => setNewText(e.target.value)}
-              className="translate-x-boxShadowX translate-y-boxShadowY mb-4 min-h-[50vh] w-full border-2 border-solid border-black bg-white p-2"
+              className="mb-4 min-h-[50vh] w-full translate-x-boxShadowX translate-y-boxShadowY border-2 border-solid border-black bg-white p-2"
               rows={4}
             />
             <input
@@ -106,11 +106,11 @@ const Home: React.FC = () => {
               accept="image/jpeg, image/png"
               onChange={handleImageChange}
               ref={fileInputRef}
-              className="shadow-dark hover:translate-x-boxShadowX hover:translate-y-boxShadowY mb-4 block w-full border-2 border-solid border-black bg-yellow-400 px-4 py-2 font-bold text-black transition-all hover:bg-yellow-500 hover:shadow-none"
+              className="mb-4 block w-full border-2 border-solid border-black bg-yellow-400 px-4 py-2 font-bold text-black shadow-dark transition-all hover:translate-x-boxShadowX hover:translate-y-boxShadowY hover:bg-yellow-500 hover:shadow-none"
             />
             <button
               onClick={handleSave}
-              className="shadow-dark hover:translate-x-boxShadowX hover:translate-y-boxShadowY border-2 border-solid border-black bg-green-400 px-4 py-2 font-bold text-black transition-all hover:bg-green-500 hover:shadow-none"
+              className="border-2 border-solid border-black bg-green-400 px-4 py-2 font-bold text-black shadow-dark transition-all hover:translate-x-boxShadowX hover:translate-y-boxShadowY hover:bg-green-500 hover:shadow-none"
             >
               Sauvegarder
             </button>
@@ -120,7 +120,7 @@ const Home: React.FC = () => {
                 setNewImage(null);
                 if (fileInputRef.current) fileInputRef.current.value = "";
               }}
-              className="shadow-dark hover:translate-x-boxShadowX hover:translate-y-boxShadowY ml-4 border-2 border-solid border-black bg-red-400 px-4 py-2 font-bold text-black transition-all hover:bg-red-500 hover:shadow-none"
+              className="ml-4 border-2 border-solid border-black bg-red-400 px-4 py-2 font-bold text-black shadow-dark transition-all hover:translate-x-boxShadowX hover:translate-y-boxShadowY hover:bg-red-500 hover:shadow-none"
             >
               Annuler
             </button>
@@ -135,7 +135,7 @@ const Home: React.FC = () => {
             </span>
             <button
               onClick={() => signOut()}
-              className="shadow-dark hover:translate-x-boxShadowX hover:translate-y-boxShadowY border-2 border-solid border-black bg-red-400 px-4 py-2 font-bold text-black transition-all hover:bg-red-500 hover:shadow-none"
+              className="border-2 border-solid border-black bg-red-400 px-4 py-2 font-bold text-black shadow-dark transition-all hover:translate-x-boxShadowX hover:translate-y-boxShadowY hover:bg-red-500 hover:shadow-none"
             >
               Se déconnecter
             </button>
@@ -143,7 +143,7 @@ const Home: React.FC = () => {
         ) : (
           <button
             onClick={() => signIn()}
-            className="shadow-dark hover:translate-x-boxShadowX hover:translate-y-boxShadowY border-2 border-solid border-black bg-yellow-400 px-4 py-2 font-bold text-black transition-all hover:bg-yellow-500 hover:shadow-none"
+            className="border-2 border-solid border-black bg-yellow-400 px-4 py-2 font-bold text-black shadow-dark transition-all hover:translate-x-boxShadowX hover:translate-y-boxShadowY hover:bg-yellow-500 hover:shadow-none"
             style={{}}
           >
             Se connecter
