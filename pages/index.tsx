@@ -21,13 +21,15 @@ const Home: React.FC = () => {
   const [newText, setNewText] = useState("");
   const [newImage, setNewImage] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     fetchContent();
   }, []);
 
   const fetchContent = async () => {
-    const response = await fetch("/api/home-content");
+    const response = await fetch("/api/home-content", { cache: "no-store" });
     if (response.ok) {
       const data = await response.json();
       setContent(data);
@@ -42,23 +44,35 @@ const Home: React.FC = () => {
   };
 
   const handleSave = async () => {
-    const formData = new FormData();
-    formData.append("text", newText);
-    if (newImage) {
-      formData.append("image", newImage);
-    }
+    setIsLoading(true);
+    setError(null);
+    try {
+      const formData = new FormData();
+      formData.append("text", newText);
+      if (newImage) {
+        formData.append("image", newImage);
+      }
 
-    const response = await fetch("/api/home-content", {
-      method: "POST",
-      body: formData,
-    });
+      const response = await fetch("/api/home-content", {
+        method: "POST",
+        body: formData,
+      });
 
-    if (response.ok) {
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Erreur lors de la sauvegarde");
+      }
+
       const updatedContent = await response.json();
       setContent(updatedContent);
       setIsEditing(false);
       setNewImage(null);
       if (fileInputRef.current) fileInputRef.current.value = "";
+    } catch (error) {
+      console.error("Erreur lors de la sauvegarde:", error);
+      setError(error instanceof Error ? error.message : "Erreur inconnue");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -77,10 +91,21 @@ const Home: React.FC = () => {
           <div className="min-h-[50vh] translate-x-boxShadowX translate-y-boxShadowY border-2 border-solid border-black bg-white p-8">
             <div className="relative min-h-48 w-full">
               <Image
-                src={content.imageUrl}
+                src={
+                  `https://femmes-en-cevennes.fr${content.imageUrl}` ||
+                  "/placeholder.jpg"
+                }
                 alt="Image d'accueil"
-                fill={true}
-                objectFit="contain"
+                fill
+                unoptimized
+                style={{ objectFit: "contain" }}
+                onError={(e) => {
+                  console.error(
+                    "Erreur de chargement de l'image:",
+                    content.imageUrl,
+                  );
+                  e.currentTarget.src = "/placeholder.jpg";
+                }}
               />
             </div>
             <p className="mt-8 text-xl">{content.text}</p>
@@ -108,11 +133,19 @@ const Home: React.FC = () => {
               ref={fileInputRef}
               className="mb-4 block w-full border-2 border-solid border-black bg-yellow-400 px-4 py-2 font-bold text-black shadow-dark transition-all hover:translate-x-boxShadowX hover:translate-y-boxShadowY hover:bg-yellow-500 hover:shadow-none"
             />
+            {error && (
+              <div className="mb-4 rounded-md bg-red-100 p-4 text-red-700">
+                {error}
+              </div>
+            )}
             <button
               onClick={handleSave}
-              className="border-2 border-solid border-black bg-green-400 px-4 py-2 font-bold text-black shadow-dark transition-all hover:translate-x-boxShadowX hover:translate-y-boxShadowY hover:bg-green-500 hover:shadow-none"
+              disabled={isLoading}
+              className={`border-2 border-solid border-black ${
+                isLoading ? "bg-gray-400" : "bg-green-400 hover:bg-green-500"
+              } px-4 py-2 font-bold text-black shadow-dark transition-all hover:translate-x-boxShadowX hover:translate-y-boxShadowY hover:shadow-none`}
             >
-              Sauvegarder
+              {isLoading ? "Sauvegarde en cours..." : "Sauvegarder"}
             </button>
             <button
               onClick={() => {
