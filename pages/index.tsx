@@ -1,14 +1,16 @@
 // pages/index.tsx
-import React, { useState, useEffect, useRef } from "react";
-import { useSession, signIn, signOut } from "next-auth/react";
-import Image from "next/image";
+import { signIn, signOut, useSession } from "next-auth/react";
 import { Notable } from "next/font/google";
+import Image from "next/image";
+import React, { useEffect, useRef, useState } from "react";
 
 const notable = Notable({ weight: ["400"], subsets: ["latin"] });
 
 interface HomeContent {
   text: string;
   imageUrl: string;
+  fileUrl: string | null;
+  fileName: string | null;
 }
 
 const Home: React.FC = () => {
@@ -16,10 +18,13 @@ const Home: React.FC = () => {
   const [content, setContent] = useState<HomeContent>({
     text: "",
     imageUrl: "",
+    fileName: null,
+    fileUrl: null,
   });
   const [isEditing, setIsEditing] = useState(false);
   const [newText, setNewText] = useState("");
   const [newImage, setNewImage] = useState<File | null>(null);
+  const [newFile, setNewFile] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -43,6 +48,12 @@ const Home: React.FC = () => {
     }
   };
 
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      setNewFile(e.target.files[0]);
+    }
+  };
+
   const handleSave = async () => {
     setIsLoading(true);
     setError(null);
@@ -51,6 +62,9 @@ const Home: React.FC = () => {
       formData.append("text", newText);
       if (newImage) {
         formData.append("image", newImage);
+      }
+      if (newFile) {
+        formData.append("file", newFile);
       }
 
       const response = await fetch("/api/home-content", {
@@ -75,7 +89,6 @@ const Home: React.FC = () => {
       setIsLoading(false);
     }
   };
-
   return (
     <main className="container mx-auto flex min-h-dvh max-w-screen-lg flex-col justify-between px-4 py-8">
       <section>
@@ -89,16 +102,21 @@ const Home: React.FC = () => {
         </div>
         {!isEditing ? (
           <div className="min-h-[50vh] translate-x-boxShadowX translate-y-boxShadowY border-2 border-solid border-black bg-white p-8">
-            <div className="relative min-h-48 w-full">
+            <div className="relative w-full">
               <Image
                 src={
                   `https://femmes-en-cevennes.fr${content.imageUrl}` ||
                   "/placeholder.jpg"
                 }
                 alt="Image d'accueil"
-                fill
+                width={1080}
+                height={1080}
                 unoptimized
-                style={{ objectFit: "contain" }}
+                sizes="100%"
+                className="w-full"
+                style={{
+                  objectFit: "contain",
+                }}
                 onError={(e) => {
                   console.error(
                     "Erreur de chargement de l'image:",
@@ -109,6 +127,17 @@ const Home: React.FC = () => {
               />
             </div>
             <p className="mt-8 text-xl">{content.text}</p>
+            {content.fileUrl && (
+              <div className="mt-8">
+                <a
+                  href={`https://femmes-en-cevennes.fr${content.fileUrl}`}
+                  download={content.fileName}
+                  className="inline-block border-2 border-solid border-black bg-blue-400 px-4 py-2 font-bold text-black shadow-dark transition-all hover:translate-x-boxShadowX hover:translate-y-boxShadowY hover:bg-blue-500 hover:shadow-none"
+                >
+                  Télécharger {content.fileName}
+                </a>
+              </div>
+            )}
             {session && (
               <button
                 onClick={() => setIsEditing(true)}
@@ -126,6 +155,9 @@ const Home: React.FC = () => {
               className="mb-4 min-h-[50vh] w-full translate-x-boxShadowX translate-y-boxShadowY border-2 border-solid border-black bg-white p-2"
               rows={4}
             />
+            <label className="mb-2 block font-bold">
+              Image à télécharger :
+            </label>
             <input
               type="file"
               accept="image/jpeg, image/png"
@@ -138,6 +170,16 @@ const Home: React.FC = () => {
                 {error}
               </div>
             )}
+            <div className="mb-4">
+              <label className="mb-2 block font-bold">
+                Fichier à télécharger :
+              </label>
+              <input
+                type="file"
+                onChange={handleFileChange}
+                className="mb-4 block w-full border-2 border-solid border-black bg-yellow-400 px-4 py-2 font-bold text-black shadow-dark transition-all hover:translate-x-boxShadowX hover:translate-y-boxShadowY hover:bg-yellow-500 hover:shadow-none"
+              />
+            </div>
             <button
               onClick={handleSave}
               disabled={isLoading}

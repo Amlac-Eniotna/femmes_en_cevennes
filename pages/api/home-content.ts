@@ -1,11 +1,11 @@
-import type { NextApiRequest, NextApiResponse } from "next";
-import sqlite3 from "sqlite3";
-import { open, Database } from "sqlite";
-import { getServerSession } from "next-auth/next";
-import { authOptions } from "./auth/[...nextauth]";
-import { IncomingForm, File, Fields, Files } from "formidable";
+import { Fields, File, Files, IncomingForm } from "formidable";
 import fs from "fs/promises";
+import type { NextApiRequest, NextApiResponse } from "next";
+import { getServerSession } from "next-auth/next";
 import path from "path";
+import { Database, open } from "sqlite";
+import sqlite3 from "sqlite3";
+import { authOptions } from "./auth/[...nextauth]";
 
 export const config = {
   api: {
@@ -34,6 +34,22 @@ async function deleteOldImage(oldImageUrl: string) {
     } catch (error) {
       console.error(
         "Erreur lors de la suppression de l'ancienne image:",
+        error,
+      );
+    }
+  }
+}
+
+async function deleteOldFile(oldFileUrl: string) {
+  if (oldFileUrl) {
+    try {
+      const fileName = path.basename(oldFileUrl);
+      const oldFilePath = path.join(UPLOADS_DIR, fileName);
+      await fs.unlink(oldFilePath);
+      console.log("Fichier supprimé:", oldFilePath);
+    } catch (error) {
+      console.error(
+        "Erreur lors de la suppression de l'ancien fichier:",
         error,
       );
     }
@@ -92,7 +108,7 @@ export default async function handler(
 
     if (req.method === "GET") {
       const content = await db.get(
-        "SELECT text, imageUrl FROM home_content LIMIT 1",
+        "SELECT text, imageUrl, fileName, fileUrl FROM home_content LIMIT 1",
       );
       return res.status(200).json(
         content || {
@@ -125,9 +141,11 @@ export default async function handler(
               ? fields.text[0]
               : fields.text || "";
             let imageUrl = "/placeholder.jpg";
+            let fileUrl = null;
+            let fileName = null;
 
             const oldContent = await db.get(
-              "SELECT imageUrl FROM home_content LIMIT 1",
+              "SELECT imageUrl, fileUrl FROM home_content LIMIT 1",
             );
             const oldImageUrl = oldContent?.imageUrl || "/placeholder.jpg";
 
@@ -156,10 +174,31 @@ export default async function handler(
               imageUrl = oldImageUrl;
             }
 
+            if (Array.isArray(files.file) && files.file[0]) {
+              const file = files.file[0] as File;
+              const newFileName = `${Date.now()}_${file.originalFilename}`;
+              const newPath = path.join(UPLOADS_DIR, newFileName);
+
+              try {
+                await moveFile(file.filepath, newPath);
+                if (oldContent?.fileUrl) {
+                  await deleteOldFile(oldContent.fileUrl);
+                }
+                fileUrl = `/uploads/${newFileName}`;
+                fileName = file.originalFilename;
+              } catch (error) {
+                console.error("Erreur upload fichier:", error);
+                throw error;
+              }
+            } else {
+              fileUrl = oldContent?.fileUrl || null;
+              fileName = oldContent?.fileName || null;
+            }
+
             await db.run(
-              `INSERT OR REPLACE INTO home_content (id, text, imageUrl)
-               VALUES (1, ?, ?)`,
-              [text, imageUrl],
+              `INSERT OR REPLACE INTO home_content (id, text, imageUrl, fileUrl, fileName)
+               VALUES (1, ?, ?, ?, ?)`,
+              [text, imageUrl, fileUrl, fileName],
             );
 
             return resolve(
@@ -167,6 +206,8 @@ export default async function handler(
                 message: "Contenu mis à jour avec succès",
                 text,
                 imageUrl,
+                fileUrl,
+                fileName,
               }),
             );
           } catch (error) {

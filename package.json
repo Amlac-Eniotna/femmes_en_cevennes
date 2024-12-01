@@ -1,6 +1,6 @@
 {
-  "name": "my-app",
-  "version": "0.1.0",
+  "name": "femmes-en-cevennes",
+  "version": "1.0.0",
   "type": "commonjs",
   "private": true,
   "scripts": {
