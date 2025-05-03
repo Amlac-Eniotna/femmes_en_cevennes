@@ -1,5 +1,5 @@
-import React, { useState } from "react";
 import { useRouter } from "next/router";
+import React, { useState } from "react";
 
 const SignupForm: React.FC = () => {
   const [email, setEmail] = useState("");
@@ -43,55 +43,58 @@ const SignupForm: React.FC = () => {
       <div>
         <label
           htmlFor="email"
-          className="mb-2 block text-sm font-bold text-white"
+          className="ml-5 block text-xs font-bold text-black"
         >
           Email
         </label>
         <input
+          placeholder="E-mail"
           type="email"
           id="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="translate-x-boxShadowX translate-y-boxShadowY block w-full border-2 border-black bg-white p-2.5 text-sm text-black focus:border-black focus:ring-black"
+          className="block w-full rounded-full border border-black bg-white px-4 py-2.5 text-sm text-black focus:border-black focus:ring-black"
           required
         />
       </div>
       <div>
         <label
           htmlFor="password"
-          className="mb-2 block text-sm font-bold text-white"
+          className="ml-5 block text-xs font-bold text-black"
         >
           Mot de passe
         </label>
         <input
+          placeholder="Mot de passe"
           type="password"
           id="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="translate-x-boxShadowX translate-y-boxShadowY block w-full border-2 border-black bg-white p-2.5 text-sm text-black focus:border-black focus:ring-black"
+          className="block w-full rounded-full border border-black bg-white px-4 py-2.5 text-sm text-black focus:border-black focus:ring-black"
           required
         />
       </div>
       <div>
         <label
           htmlFor="confirmPassword"
-          className="mb-2 block text-sm font-bold text-white"
+          className="ml-5 block text-xs font-bold text-black"
         >
           Confirmer le mot de passe
         </label>
         <input
+          placeholder="Mot de passe"
           type="password"
           id="confirmPassword"
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
-          className="translate-x-boxShadowX translate-y-boxShadowY block w-full border-2 border-black bg-white p-2.5 text-sm text-black focus:border-black focus:ring-black"
+          className="block w-full rounded-full border border-black bg-white px-4 py-2.5 text-sm text-black focus:border-black focus:ring-black"
           required
         />
       </div>
       {error && <p className="text-sm text-red-500">{error}</p>}
       <button
         type="submit"
-        className="shadow-dark hover:translate-x-boxShadowX hover:translate-y-boxShadowY mt-8 w-full border-2 border-solid border-black bg-yellow-400 px-4 py-2 font-bold text-black transition-all hover:bg-yellow-500 hover:shadow-none"
+        className="mt-8 inline-block w-full rounded-full border border-solid border-black bg-black px-4 py-2 text-white transition-colors hover:bg-white hover:text-black"
       >
         {"S'inscrire"}
       </button>

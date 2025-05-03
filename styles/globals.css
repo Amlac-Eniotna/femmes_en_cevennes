@@ -1,3 +1,33 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  :root {
+    --font-editorial-new: "PPEditorialNew";
+    --font-editorial-old: "PPEditorialOld";
+  }
+
+  body {
+    font-family: var(--font-editorial-new);
+    font-feature-settings:
+      "liga" 1,
+      "calt" 1;
+    -webkit-font-feature-settings:
+      "liga" 1,
+      "calt" 1;
+    text-rendering: optimizeLegibility;
+  }
+
+  .font-editorial-new,
+  .font-editorial-old {
+    font-feature-settings:
+      "liga" 1,
+      "calt" 1,
+      "dlig" 1;
+    -webkit-font-feature-settings:
+      "liga" 1,
+      "calt" 1,
+      "dlig" 1;
+  }
+}

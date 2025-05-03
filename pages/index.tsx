@@ -98,7 +98,7 @@ const Home: React.FC = () => {
           </h1>
         </div>
         {!isEditing ? (
-          <div className="min-h-[50vh] border-2 border-solid border-black bg-white p-8">
+          <div className="min-h-[50vh]">
             <div className="relative w-full">
               <Image
                 src={
@@ -110,7 +110,7 @@ const Home: React.FC = () => {
                 height={1080}
                 unoptimized
                 sizes="100%"
-                className="w-full"
+                className="m-auto w-full max-w-screen-sm border border-solid border-black"
                 style={{
                   objectFit: "contain",
                 }}
@@ -129,7 +129,7 @@ const Home: React.FC = () => {
                 <a
                   href={`https://femmes-en-cevennes.fr${content.fileUrl}`}
                   download={content.fileName}
-                  className="inline-block border-2 border-solid border-black bg-blue-400 px-4 py-2 text-black shadow-dark transition-all hover:bg-blue-500 hover:shadow-none"
+                  className="inline-block rounded-full border border-solid border-black px-4 py-2 text-black transition-colors hover:bg-black hover:text-white"
                 >
                   Télécharger {content.fileName}
                 </a>
@@ -138,7 +138,7 @@ const Home: React.FC = () => {
             {session && (
               <button
                 onClick={() => setIsEditing(true)}
-                className="mt-4 border-2 border-solid border-black bg-yellow-400 px-4 py-2 text-black shadow-dark transition-all hover:bg-yellow-500 hover:shadow-none"
+                className="mt-4 inline-block rounded-full border border-solid border-black px-4 py-2 text-black transition-colors hover:bg-black hover:text-white"
               >
                 Modifier
               </button>
@@ -149,7 +149,7 @@ const Home: React.FC = () => {
             <textarea
               value={newText}
               onChange={(e) => setNewText(e.target.value)}
-              className="mb-4 min-h-[50vh] w-full border-2 border-solid border-black bg-white p-2"
+              className="mb-4 min-h-[50vh] w-full border border-solid border-black bg-white p-2"
               rows={4}
             />
             <label className="mb-2 block">Image à télécharger :</label>
@@ -158,7 +158,7 @@ const Home: React.FC = () => {
               accept="image/jpeg, image/png"
               onChange={handleImageChange}
               ref={fileInputRef}
-              className="mb-4 block w-full border-2 border-solid border-black bg-yellow-400 px-4 py-2 text-black shadow-dark transition-all hover:bg-yellow-500 hover:shadow-none"
+              className="mb-4 inline-block w-full rounded-full border border-solid border-black px-6 py-2 text-black transition-colors hover:bg-black hover:text-white"
             />
             {error && (
               <div className="mb-4 rounded-md bg-red-100 p-4 text-red-700">
@@ -170,15 +170,17 @@ const Home: React.FC = () => {
               <input
                 type="file"
                 onChange={handleFileChange}
-                className="mb-4 block w-full border-2 border-solid border-black bg-yellow-400 px-4 py-2 text-black shadow-dark transition-all hover:bg-yellow-500 hover:shadow-none"
+                className="inline-block w-full rounded-full border border-solid border-black px-6 py-2 text-black transition-colors hover:bg-black hover:text-white"
               />
             </div>
             <button
               onClick={handleSave}
               disabled={isLoading}
               className={`border-2 border-solid border-black ${
-                isLoading ? "bg-gray-400" : "bg-green-400 hover:bg-green-500"
-              } px-4 py-2 text-black shadow-dark transition-all hover:shadow-none`}
+                isLoading
+                  ? "bg-gray-400"
+                  : "bg-black text-white hover:bg-white hover:text-black"
+              } inline-block rounded-full border border-solid border-black px-4 py-2 transition-colors`}
             >
               {isLoading ? "Sauvegarde en cours..." : "Sauvegarder"}
             </button>
@@ -188,7 +190,7 @@ const Home: React.FC = () => {
                 setNewImage(null);
                 if (fileInputRef.current) fileInputRef.current.value = "";
               }}
-              className="ml-4 border-2 border-solid border-black bg-red-400 px-4 py-2 text-black shadow-dark transition-all hover:bg-red-500 hover:shadow-none"
+              className="ml-4 inline-block rounded-full border border-solid border-black px-4 py-2 text-black transition-colors hover:bg-black hover:text-white"
             >
               Annuler
             </button>
@@ -197,13 +199,13 @@ const Home: React.FC = () => {
       </section>
       <footer className="mt-4 flex items-center justify-between">
         {session ? (
-          <div>
-            <span className="mr-4 text-white">
+          <div className="flex w-full items-center justify-between">
+            <span className="mr-4">
               Bonjour, {session.user?.name || session.user?.email}
             </span>
             <button
               onClick={() => signOut()}
-              className="border-2 border-solid border-black bg-red-400 px-4 py-2 text-black shadow-dark transition-all hover:bg-red-500 hover:shadow-none"
+              className="inline-block rounded-full border border-solid border-black px-4 py-2 text-black transition-colors hover:bg-black hover:text-white"
             >
               Se déconnecter
             </button>
@@ -211,7 +213,7 @@ const Home: React.FC = () => {
         ) : (
           <button
             onClick={() => signIn()}
-            className="border-2 border-solid border-black bg-yellow-400 px-4 py-2 text-black shadow-dark transition-all hover:bg-yellow-500 hover:shadow-none"
+            className="inline-block rounded-full border border-solid border-black px-4 py-2 text-black transition-colors hover:bg-black hover:text-white"
             style={{}}
           >
             Se connecter
