@@ -1,10 +1,7 @@
 // pages/index.tsx
 import { signIn, signOut, useSession } from "next-auth/react";
-import { Notable } from "next/font/google";
 import Image from "next/image";
 import React, { useEffect, useRef, useState } from "react";
-
-const notable = Notable({ weight: ["400"], subsets: ["latin"] });
 
 interface HomeContent {
   text: string;
@@ -94,14 +91,14 @@ const Home: React.FC = () => {
       <section>
         <div className="mb-8 flex items-center justify-between">
           <h1
-            className={`font-editorial-old translate-x-boxShadowX translate-y-boxShadowY text-5xl`}
+            className={`font-editorial-old text-5xl`}
             style={{ WebkitTextStroke: "1px black" }}
           >
             Femmes en cévennes
           </h1>
         </div>
         {!isEditing ? (
-          <div className="min-h-[50vh] translate-x-boxShadowX translate-y-boxShadowY border-2 border-solid border-black bg-white p-8">
+          <div className="min-h-[50vh] border-2 border-solid border-black bg-white p-8">
             <div className="relative w-full">
               <Image
                 src={
@@ -132,7 +129,7 @@ const Home: React.FC = () => {
                 <a
                   href={`https://femmes-en-cevennes.fr${content.fileUrl}`}
                   download={content.fileName}
-                  className="inline-block border-2 border-solid border-black bg-blue-400 px-4 py-2 font-bold text-black shadow-dark transition-all hover:translate-x-boxShadowX hover:translate-y-boxShadowY hover:bg-blue-500 hover:shadow-none"
+                  className="inline-block border-2 border-solid border-black bg-blue-400 px-4 py-2 text-black shadow-dark transition-all hover:bg-blue-500 hover:shadow-none"
                 >
                   Télécharger {content.fileName}
                 </a>
@@ -141,7 +138,7 @@ const Home: React.FC = () => {
             {session && (
               <button
                 onClick={() => setIsEditing(true)}
-                className="mt-4 border-2 border-solid border-black bg-yellow-400 px-4 py-2 font-bold text-black shadow-dark transition-all hover:translate-x-boxShadowX hover:translate-y-boxShadowY hover:bg-yellow-500 hover:shadow-none"
+                className="mt-4 border-2 border-solid border-black bg-yellow-400 px-4 py-2 text-black shadow-dark transition-all hover:bg-yellow-500 hover:shadow-none"
               >
                 Modifier
               </button>
@@ -152,18 +149,16 @@ const Home: React.FC = () => {
             <textarea
               value={newText}
               onChange={(e) => setNewText(e.target.value)}
-              className="mb-4 min-h-[50vh] w-full translate-x-boxShadowX translate-y-boxShadowY border-2 border-solid border-black bg-white p-2"
+              className="mb-4 min-h-[50vh] w-full border-2 border-solid border-black bg-white p-2"
               rows={4}
             />
-            <label className="mb-2 block font-bold">
-              Image à télécharger :
-            </label>
+            <label className="mb-2 block">Image à télécharger :</label>
             <input
               type="file"
               accept="image/jpeg, image/png"
               onChange={handleImageChange}
               ref={fileInputRef}
-              className="mb-4 block w-full border-2 border-solid border-black bg-yellow-400 px-4 py-2 font-bold text-black shadow-dark transition-all hover:translate-x-boxShadowX hover:translate-y-boxShadowY hover:bg-yellow-500 hover:shadow-none"
+              className="mb-4 block w-full border-2 border-solid border-black bg-yellow-400 px-4 py-2 text-black shadow-dark transition-all hover:bg-yellow-500 hover:shadow-none"
             />
             {error && (
               <div className="mb-4 rounded-md bg-red-100 p-4 text-red-700">
@@ -171,13 +166,11 @@ const Home: React.FC = () => {
               </div>
             )}
             <div className="mb-4">
-              <label className="mb-2 block font-bold">
-                Fichier à télécharger :
-              </label>
+              <label className="mb-2 block">Fichier à télécharger :</label>
               <input
                 type="file"
                 onChange={handleFileChange}
-                className="mb-4 block w-full border-2 border-solid border-black bg-yellow-400 px-4 py-2 font-bold text-black shadow-dark transition-all hover:translate-x-boxShadowX hover:translate-y-boxShadowY hover:bg-yellow-500 hover:shadow-none"
+                className="mb-4 block w-full border-2 border-solid border-black bg-yellow-400 px-4 py-2 text-black shadow-dark transition-all hover:bg-yellow-500 hover:shadow-none"
               />
             </div>
             <button
@@ -185,7 +178,7 @@ const Home: React.FC = () => {
               disabled={isLoading}
               className={`border-2 border-solid border-black ${
                 isLoading ? "bg-gray-400" : "bg-green-400 hover:bg-green-500"
-              } px-4 py-2 font-bold text-black shadow-dark transition-all hover:translate-x-boxShadowX hover:translate-y-boxShadowY hover:shadow-none`}
+              } px-4 py-2 text-black shadow-dark transition-all hover:shadow-none`}
             >
               {isLoading ? "Sauvegarde en cours..." : "Sauvegarder"}
             </button>
@@ -195,7 +188,7 @@ const Home: React.FC = () => {
                 setNewImage(null);
                 if (fileInputRef.current) fileInputRef.current.value = "";
               }}
-              className="ml-4 border-2 border-solid border-black bg-red-400 px-4 py-2 font-bold text-black shadow-dark transition-all hover:translate-x-boxShadowX hover:translate-y-boxShadowY hover:bg-red-500 hover:shadow-none"
+              className="ml-4 border-2 border-solid border-black bg-red-400 px-4 py-2 text-black shadow-dark transition-all hover:bg-red-500 hover:shadow-none"
             >
               Annuler
             </button>
@@ -210,7 +203,7 @@ const Home: React.FC = () => {
             </span>
             <button
               onClick={() => signOut()}
-              className="border-2 border-solid border-black bg-red-400 px-4 py-2 font-bold text-black shadow-dark transition-all hover:translate-x-boxShadowX hover:translate-y-boxShadowY hover:bg-red-500 hover:shadow-none"
+              className="border-2 border-solid border-black bg-red-400 px-4 py-2 text-black shadow-dark transition-all hover:bg-red-500 hover:shadow-none"
             >
               Se déconnecter
             </button>
@@ -218,7 +211,7 @@ const Home: React.FC = () => {
         ) : (
           <button
             onClick={() => signIn()}
-            className="border-2 border-solid border-black bg-yellow-400 px-4 py-2 font-bold text-black shadow-dark transition-all hover:translate-x-boxShadowX hover:translate-y-boxShadowY hover:bg-yellow-500 hover:shadow-none"
+            className="border-2 border-solid border-black bg-yellow-400 px-4 py-2 text-black shadow-dark transition-all hover:bg-yellow-500 hover:shadow-none"
             style={{}}
           >
             Se connecter
