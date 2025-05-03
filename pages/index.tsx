@@ -94,7 +94,7 @@ const Home: React.FC = () => {
       <section>
         <div className="mb-8 flex items-center justify-between">
           <h1
-            className={`${notable.className} translate-x-boxShadowX translate-y-boxShadowY stroke-black text-5xl font-extrabold text-amber-400`}
+            className={`font-editorial-old translate-x-boxShadowX translate-y-boxShadowY text-5xl`}
             style={{ WebkitTextStroke: "1px black" }}
           >
             Femmes en cévennes
