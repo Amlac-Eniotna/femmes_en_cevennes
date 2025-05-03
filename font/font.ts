@@ -7,5 +7,5 @@ export const editorialNew = localFont({
 
 export const editorialOld = localFont({
   src: "./PPEditorialOld-Regular.woff2",
-  variable: "--font-editorial-new",
+  variable: "--font-editorial-old",
 });
