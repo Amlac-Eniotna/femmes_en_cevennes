@@ -88,7 +88,7 @@ const Home: React.FC = () => {
   };
   return (
     <main className="container mx-auto flex min-h-dvh max-w-screen-lg flex-col justify-between px-4 py-8">
-      <section>
+      <section className="mb-5">
         <div className="mb-8 flex items-center justify-between">
           <h1
             className={`font-editorial-old text-5xl`}
@@ -197,7 +197,8 @@ const Home: React.FC = () => {
           </div>
         )}
       </section>
-      <footer className="mt-4 flex items-center justify-between">
+      <div className="h-[1px] w-full bg-black" />
+      <footer className="mt-5 flex items-center justify-between">
         {session ? (
           <div className="flex w-full items-center justify-between">
             <span className="mr-4">
