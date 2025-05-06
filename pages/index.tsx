@@ -94,7 +94,7 @@ const Home: React.FC = () => {
             className={`font-editorial-old text-5xl`}
             style={{ WebkitTextStroke: "1px black" }}
           >
-            Femmes en cévennes
+            Femmes en Cévennes
           </h1>
         </div>
         {!isEditing ? (
