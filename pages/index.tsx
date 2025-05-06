@@ -101,10 +101,7 @@ const Home: React.FC = () => {
           <div className="min-h-[50vh]">
             <div className="relative w-full">
               <Image
-                src={
-                  `https://femmes-en-cevennes.fr${content.imageUrl}` ||
-                  "/placeholder.jpg"
-                }
+                src={content.imageUrl || "/placeholder.jpg"}
                 alt="Image d'accueil"
                 width={1080}
                 height={1080}
@@ -127,7 +124,7 @@ const Home: React.FC = () => {
             {content.fileUrl && (
               <div className="mt-8">
                 <a
-                  href={`https://femmes-en-cevennes.fr${content.fileUrl}`}
+                  href={content.fileUrl}
                   download={content.fileName}
                   className="inline-block rounded-full border border-solid border-black bg-white px-4 py-2 text-black transition-colors hover:bg-black hover:text-white"
                 >

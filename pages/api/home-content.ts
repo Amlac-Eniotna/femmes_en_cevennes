@@ -156,7 +156,7 @@ export default async function handler(
 
               try {
                 await moveFile(file.filepath, newPath);
-                imageUrl = `/public/uploads/${fileName}`;
+                imageUrl = `/uploads/${fileName}`;
                 await deleteOldImage(oldImageUrl);
               } catch (error) {
                 console.error("Erreur upload:", error);
