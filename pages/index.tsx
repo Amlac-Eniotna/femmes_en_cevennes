@@ -101,10 +101,7 @@ const Home: React.FC = () => {
           <div className="min-h-[50vh]">
             <div className="relative w-full">
               <Image
-                src={
-                  `https://femmes-en-cevennes.fr${content.imageUrl}` ||
-                  "/placeholder.jpg"
-                }
+                src={`/${content.imageUrl}` || "/placeholder.jpg"}
                 alt="Image d'accueil"
                 width={1080}
                 height={1080}
