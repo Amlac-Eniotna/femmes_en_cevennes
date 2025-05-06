@@ -138,7 +138,7 @@ const Home: React.FC = () => {
             {session && (
               <button
                 onClick={() => setIsEditing(true)}
-                className="mt-4 inline-block rounded-full border border-solid border-black px-4 py-2 text-black transition-colors hover:bg-black hover:text-white"
+                className="mt-4 inline-block rounded-full border border-solid border-black bg-white px-4 py-2 text-black transition-colors hover:bg-black hover:text-white"
               >
                 Modifier
               </button>
@@ -176,7 +176,7 @@ const Home: React.FC = () => {
             <button
               onClick={handleSave}
               disabled={isLoading}
-              className={`border-2 border-solid border-black ${
+              className={`border border-solid border-black ${
                 isLoading
                   ? "bg-gray-400"
                   : "bg-black text-white hover:bg-white hover:text-black"
