@@ -6,7 +6,7 @@ export default function Document() {
     <Html lang="fr">
       <Head />
       <body
-        className={` ${editorialNew.variable} ${editorialOld.variable} font-editorial-new`}
+        className={` ${editorialNew.variable} ${editorialOld.variable} bg-emerald-50 font-editorial-new`}
       >
         <Main />
         <NextScript />
