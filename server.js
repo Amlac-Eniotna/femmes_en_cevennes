@@ -1,20 +1,28 @@
 const { createServer } = require("http");
 const { parse } = require("url");
 const next = require("next");
+const express = require("express");
+const path = require("path");
 
 const dev = process.env.NODE_ENV !== "production";
-const hostname = process.env.HOST || "localhost";
-const port = process.env.PORT || 3000;
-
-const app = next({ dev, hostname, port });
+const app = next({ dev });
 const handle = app.getRequestHandler();
 
 app.prepare().then(() => {
-  createServer((req, res) => {
-    const parsedUrl = parse(req.url, true);
-    handle(req, res, parsedUrl);
-  }).listen(port, hostname, (err) => {
+  const server = express();
+
+  // Configuration cruciale pour servir les fichiers statiques
+  server.use(
+    "/uploads",
+    express.static(path.join(__dirname, "public/uploads")),
+  );
+
+  server.all("*", (req, res) => {
+    return handle(req, res);
+  });
+
+  server.listen(3000, "0.0.0.0", (err) => {
     if (err) throw err;
-    console.log(`> Ready on http://${hostname}:${port}`);
+    console.log("> Ready on http://0.0.0.0:3000");
   });
 });
